@@ -1,0 +1,15 @@
+# Generated build outputs and local caches
+/build/
+/Debug/
+/Release/
+/mx.scratch/
+/.cache/
+/CMakeUserPresets.json
+*.o
+*.d
+*.elf
+*.hex
+*.bin
+*.map
+*.log
+# Keep the required precompiled CMSIS-DSP .a library tracked.

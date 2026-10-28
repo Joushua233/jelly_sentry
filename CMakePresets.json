@@ -1,0 +1,32 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": { "major": 4, "minor": 0, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "stm32-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": { "CMAKE_EXPORT_COMPILE_COMMANDS": true }
+    },
+    {
+      "name": "stm32-windows",
+      "hidden": true,
+      "inherits": "stm32-base",
+      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows" },
+      "environment": {
+        "STM32_BUNDLE_ROOT": "$penv{LOCALAPPDATA}/stm32cube/bundles",
+        "PATH": "$env{STM32_BUNDLE_ROOT}/gnu-tools-for-stm32/14.3.1+st.2/bin;$env{STM32_BUNDLE_ROOT}/ninja/1.13.2+st.1/bin;$env{STM32_BUNDLE_ROOT}/cmake/4.4.0+st.1/bin;$penv{PATH}"
+      },
+      "cacheVariables": {
+        "CMAKE_MAKE_PROGRAM": "$env{STM32_BUNDLE_ROOT}/ninja/1.13.2+st.1/bin/ninja.exe"
+      }
+    },
+    { "name": "Debug", "displayName": "STM32 Debug (GCC / Ninja)", "inherits": "stm32-windows", "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" } },
+    { "name": "Release", "displayName": "STM32 Release (GCC / Ninja)", "inherits": "stm32-windows", "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" } }
+  ],
+  "buildPresets": [
+    { "name": "Debug", "configurePreset": "Debug" },
+    { "name": "Release", "configurePreset": "Release" }
+  ]
+}
